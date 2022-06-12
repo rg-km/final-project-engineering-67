@@ -1,15 +1,24 @@
 package main
 
 import (
+	"doakan/auth"
 	"doakan/handler"
 	"doakan/user"
 	"log"
 
 	"github.com/gin-gonic/gin"
+	"github.com/joho/godotenv"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
 )
+
+// env
+func init() {
+	if envLoadError := godotenv.Load(); envLoadError != nil {
+		log.Fatal("[ ERROR ] Failed to load .env file")
+	}
+}
 
 func main() {
 	db, err := gorm.Open(sqlite.Open("doakan.db"), &gorm.Config{
@@ -22,7 +31,9 @@ func main() {
 
 	userRepository := user.NewRepository(db)
 	userService := user.NewService(userRepository)
-	userHandler := handler.NewUserHandler(userService)
+	authService := auth.NewService()
+
+	userHandler := handler.NewUserHandler(userService, authService)
 
 	router := gin.Default()
 	api := router.Group("api/v1")
