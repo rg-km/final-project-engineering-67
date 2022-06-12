@@ -99,7 +99,7 @@ func Migrate() (*sql.DB, error) {
 		user_id INTEGER,
 		nama VARCHAR(128),
 		deskripsi_singkat VARCHAR(128),
-		deskripsi VARCHAR(128),
+		deskripsi TEXT,
 		perks VARCHAR(128),
 		donatur_count INTEGER,
 		goal_amount INTEGER,
