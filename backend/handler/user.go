@@ -1,9 +1,9 @@
 package handler
 
 import (
-	"doakan/auth"
-	"doakan/helper"
-	"doakan/user"
+	"final-project-engineering-67/auth"
+	"final-project-engineering-67/helper"
+	"final-project-engineering-67/user"
 	"fmt"
 	"net/http"
 

@@ -1,10 +1,11 @@
 package main
 
 import (
-	"doakan/auth"
-	"doakan/handler"
-	"doakan/helper"
-	"doakan/user"
+	"final-project-engineering-67/auth"
+	"final-project-engineering-67/donasi"
+	"final-project-engineering-67/handler"
+	"final-project-engineering-67/helper"
+	"final-project-engineering-67/user"
 	"log"
 	"net/http"
 	"strings"
@@ -34,17 +35,25 @@ func main() {
 	}
 
 	userRepository := user.NewRepository(db)
+	donasiRepository := donasi.NewRepository(db)
+
 	userService := user.NewService(userRepository)
+	donasiService := donasi.NewService(donasiRepository)
 	authService := auth.NewService()
 
 	userHandler := handler.NewUserHandler(userService, authService)
+	donasiHandler := handler.NewDonasiHandler(donasiService)
 
 	router := gin.Default()
+	router.Static("/images", "./images")
 	api := router.Group("api/v1")
+
 	api.POST("/register", userHandler.RegisterUser)
 	api.POST("/login", userHandler.Login)
 	api.POST("/email_checkers", userHandler.CheckEmailAvailable)
 	api.POST("/upload_image_profile", authMiddleware(authService, userService), userHandler.UploadImageProfile)
+
+	api.GET("/donasi", donasiHandler.GetDonasi)
 	router.Run()
 }
 

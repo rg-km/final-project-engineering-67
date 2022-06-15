@@ -21,7 +21,7 @@ type User struct {
 
 type Transaction struct {
 	ID          int       `db:"id"`
-	Donasi_ID   int       `db:"donasi_id"`
+	Donation_ID int       `db:"donation_id"`
 	User_ID     int       `db:"user_id"`
 	Amount      int       `db:"amount"`
 	Status      string    `db:"status"`
@@ -30,7 +30,7 @@ type Transaction struct {
 	Updated_At  time.Time `db:"updated_at"`
 }
 
-type Donasi struct {
+type Donation struct {
 	ID                int       `db:"id"`
 	User_ID           int       `db:"user_id"`
 	Nama              string    `db:"nama"`
@@ -45,13 +45,13 @@ type Donasi struct {
 	Updated_At        time.Time `db:"updated_at"`
 }
 
-type Donasi_Image struct {
-	ID         int       `db:"id"`
-	Donasi_ID  int       `db:"donasi_id"`
-	FileName   string    `db:"filename"`
-	Is_Primary string    `db:"is_primary"`
-	Created_At time.Time `db:"created_at"`
-	Updated_At time.Time `db:"updated_at"`
+type DonationImage struct {
+	ID          int       `db:"id"`
+	Donation_ID int       `db:"donation_id"`
+	FileName    string    `db:"filename"`
+	Is_Primary  string    `db:"is_primary"`
+	Created_At  time.Time `db:"created_at"`
+	Updated_At  time.Time `db:"updated_at"`
 }
 
 // Migrate digunakan untuk melakukan migrasi database dengan data yang dibutuhkan
@@ -80,7 +80,7 @@ func Migrate() (*sql.DB, error) {
 
 	sqlStmt = `CREATE TABLE IF NOT EXISTS transactions (
 		id INTEGER PRIMARY KEY AUTOINCREMENT,
-		donasi_id INTEGER,
+		donation_id INTEGER,
 		user_id INTEGER,
 		amount INTEGER,
 		status VARCHAR(128),
@@ -94,7 +94,7 @@ func Migrate() (*sql.DB, error) {
 		return nil, err
 	}
 
-	sqlStmt = `CREATE TABLE IF NOT EXISTS donasi (
+	sqlStmt = `CREATE TABLE IF NOT EXISTS donations (
 		id INTEGER PRIMARY KEY AUTOINCREMENT,
 		user_id INTEGER,
 		nama VARCHAR(128),
@@ -114,9 +114,9 @@ func Migrate() (*sql.DB, error) {
 		return nil, err
 	}
 
-	sqlStmt = `CREATE TABLE IF NOT EXISTS donasi_images (
+	sqlStmt = `CREATE TABLE IF NOT EXISTS donation_images (
 		id INTEGER PRIMARY KEY AUTOINCREMENT,
-		donasi_id INTEGER,
+		donation_id INTEGER,
 		filename VARCHAR(128),
 		is_primary VARCHAR(128),
 		created_at DATETIME,
@@ -144,13 +144,13 @@ func Rollback(db *sql.DB) {
 		panic(err)
 	}
 
-	sqlStmt = `DROP TABLE donasi;`
+	sqlStmt = `DROP TABLE donations;`
 	_, err = db.Exec(sqlStmt)
 	if err != nil {
 		panic(err)
 	}
 
-	sqlStmt = `DROP TABLE donasi_images;`
+	sqlStmt = `DROP TABLE donation_images;`
 	_, err = db.Exec(sqlStmt)
 	if err != nil {
 		panic(err)
