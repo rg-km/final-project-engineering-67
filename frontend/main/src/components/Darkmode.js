@@ -1,6 +1,6 @@
 import { Flex, Stack, IconButton, Button } from "@chakra-ui/react";
 import { useColorMode } from '@chakra-ui/react';
-import {FaMoon, FaSun} from 'react-icons/fa';
+import { FaBars, FaMoon, FaSun } from 'react-icons/fa';
 import React from "react";
 import { BrowserRouter as 
     Router, 
@@ -14,7 +14,7 @@ function DarkModeSwitch () {
 
     return(
         <Flex>
-            <Flex pos='fixed' top='1rem' right='1rem' align='center'>
+            <Flex pos='fixed' top='0.5rem' right='1rem' align='center'>
                 <Flex px='2' display={['none', 'none', 'flex', 'flex']}>
                     <Router href="/">
                         <Button as="a" variant="ghost" aria-label="Home" my={5} w="100%">
@@ -42,13 +42,17 @@ function DarkModeSwitch () {
                         </Button>
                     </Router>
                 </Flex>
+                <IconButton aria-label="Open Menu" size="lg" mr='2rem' display={['flex', 'flex', 'none', 'none']} icon={<FaBars/>} />
                 <Flex px='1'>
                     <Stack direction='row' spacing='4' align='end'>
                         <IconButton icon={ isDark ? <FaSun/> : <FaMoon/>} isRound='true' onClick={toggleColorMode}/>
                     </Stack>
                 </Flex>
-            </Flex>
 
+                <Flex flexDir='co'>
+
+                </Flex>
+            </Flex>
         </Flex>
     );
 }
