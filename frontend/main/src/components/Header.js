@@ -1,34 +1,43 @@
-import { Flex, VStack, Heading, IconButton, Button, Stack, Spacer, Switch } from "@chakra-ui/react";
-import {FaMoon, FaSun} from 'react-icons/fa';
-import React from "react";
-import { useColorMode } from '@chakra-ui/react';
+import { Heading, IconButton, VStack, Flex, Button, Spacer } from "@chakra-ui/react";
+import {FaSun, FaMoon} from 'react-icons/fa';
+import { useColorMode } from "@chakra-ui/react";
+import { BrowserRouter as 
+    Router } from "react-router-dom";
 
-function NavigationBar(){
-    const {colorMode, toggleColorMode} = useColorMode();
+
+
+export const HeaderNav = () => {
+    const { colorMode, toggleColorMode } = useColorMode();
     const isDark = colorMode === 'dark';
 
+
     return(
-        <VStack p={5}>
+        <VStack>
             <Flex w='100%'>
-                <Heading ml={8} size='md' fontWeight='semibold' color='cyan.400'>
-                    Doakan
-                </Heading>
+                <Heading p='1rem' m='0.7rem' ml='7' size='md' fontWeight='semibold' color='cyan.400' >Doakan</Heading>
                 <Spacer/>
-                <Stack direction='row' spacing='4' align='center' pr='4'>
-                    <Button variant='ghost'>Home</Button>
-                    <Button variant='ghost'>Donasi</Button>
-                    <Button variant='ghost'>Tutorial</Button>
-                    <Button variant='ghost'>Testimoni</Button>
-                    <Button>Get Started</Button>
-                </Stack>
-                <Stack direction='row' spacing='4' align='end'>
-                    <IconButton icon={ isDark ? <FaSun/> : <FaMoon/>} isRound='true' onClick={toggleColorMode}/>
-                </Stack>
-                <Switch color='green' isChecked={isDark} onChange={toggleColorMode}></Switch>
+                <Router href="/">
+                    <Button as="a" variant="ghost" aria-label="Donasi" my={5}>
+                        Home
+                    </Button>
+                </Router>
+                <Router href="/">
+                    <Button as="a" variant="ghost" aria-label="Tutorial" my={5}>
+                        Tutorial
+                    </Button>
+                </Router>
+                <Router href="/">
+                    <Button as="a" variant="ghost" aria-label="Testimoni" my={5}>
+                        Testiomoni
+                    </Button>
+                </Router>
+                <Router href="/">
+                    <Button as="a" variant="outline" aria-label="Get Started" my={5}>
+                        Get Started
+                    </Button>
+                </Router>
+                <IconButton m='1.2rem' p='1rem' icon={ isDark ? <FaSun/> : <FaMoon/>} isRound='true' onClick={toggleColorMode}/>
             </Flex>
         </VStack>
     );
 }
-
-
-export default NavigationBar;

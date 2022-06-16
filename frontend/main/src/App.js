@@ -1,13 +1,17 @@
-import { ChakraProvider } from "@chakra-ui/react";
-import DarkModeSwitch from "./components/Darkmode";
-import NavigationBar from "./components/Header";
-
+import React from 'react';
+import {
+  ChakraProvider,
+  theme,
+} from '@chakra-ui/react';
+import { HeaderNav } from './components/Header';
+import { SuperHero } from './components/Hero';
+import DashBoardMain from './pages/Dashboard';
 
 function App() {
   return (
-    <ChakraProvider>
-      <DarkModeSwitch/>
-      {/* <NavigationBar/> */}
+    <ChakraProvider theme={theme}>
+      <HeaderNav/>
+      <DashBoardMain/>
     </ChakraProvider>
   );
 }
