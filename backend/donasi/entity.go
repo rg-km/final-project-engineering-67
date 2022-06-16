@@ -1,6 +1,9 @@
 package donasi
 
-import "time"
+import (
+	"final-project-engineering-67/user"
+	"time"
+)
 
 type Donation struct {
 	ID               int
@@ -16,6 +19,7 @@ type Donation struct {
 	CreatedAt        time.Time
 	UpdatedAt        time.Time
 	DonationImages   []DonationImage
+	User             user.User
 }
 
 type DonationImage struct {

@@ -5,6 +5,7 @@ import "gorm.io/gorm"
 type Repository interface {
 	GetAll() ([]Donation, error)
 	GetByUserID(userID int) ([]Donation, error)
+	GetByID(ID int) (Donation, error)
 }
 
 type repository struct {
@@ -34,4 +35,15 @@ func (r *repository) GetByUserID(userID int) ([]Donation, error) {
 	}
 
 	return donations, nil
+}
+
+func (r *repository) GetByID(ID int) (Donation, error) {
+	var donasi Donation
+
+	err := r.db.Preload("User").Preload("DonationImages").Where("id = ?", ID).Find(&donasi).Error
+	if err != nil {
+		return donasi, err
+	}
+
+	return donasi, nil
 }
