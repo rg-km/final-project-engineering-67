@@ -37,7 +37,7 @@ func (h *userHandler) RegisterUser(c *gin.Context) {
 
 	newUser, err := h.userService.RegisterUser(input)
 	if err != nil {
-		response := helper.APIResponse("Akun gagal dibuat!", http.StatusBadRequest, "error", nil)
+		response := helper.APIResponse("Akun gagal dibuat, email sudah ada", http.StatusBadRequest, "error", nil)
 		c.JSON(http.StatusBadRequest, response)
 		return
 	}

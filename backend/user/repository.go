@@ -1,6 +1,10 @@
 package user
 
-import "gorm.io/gorm"
+import (
+	"errors"
+
+	"gorm.io/gorm"
+)
 
 type Repository interface {
 	Save(user User) (User, error)
@@ -18,6 +22,11 @@ func NewRepository(db *gorm.DB) *repository {
 }
 
 func (r *repository) Save(user User) (User, error) {
+	result := r.db.Where("email = ?", user.Email).First(&User{})
+	if result.RowsAffected > 0 {
+		return user, errors.New("email sudah terdaftar")
+	}
+
 	err := r.db.Create(&user).Error
 	if err != nil {
 		return user, err
