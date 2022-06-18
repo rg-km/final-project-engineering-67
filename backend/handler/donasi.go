@@ -3,6 +3,7 @@ package handler
 import (
 	"final-project-engineering-67/donasi"
 	"final-project-engineering-67/helper"
+	"final-project-engineering-67/user"
 	"net/http"
 	"strconv"
 
@@ -49,5 +50,33 @@ func (h *donasiHandler) GetDonation(c *gin.Context) {
 	}
 
 	response := helper.APIResponse("Get Detail Donasi success", http.StatusOK, "success", donasi.FormatDonationDetail(donationDetail))
+	c.JSON(http.StatusOK, response)
+}
+
+func (h *donasiHandler) CreateDonation(c *gin.Context) {
+	var input donasi.CreateDonationInput
+
+	err := c.ShouldBindJSON(&input)
+	if err != nil {
+		errors := helper.FormatValidationError(err)
+		errorMessage := gin.H{"errors": errors}
+
+		response := helper.APIResponse("Donasi gagal dibuat!", http.StatusUnprocessableEntity, "error", errorMessage)
+		c.JSON(http.StatusUnprocessableEntity, response)
+		return
+	}
+
+	currentUser := c.MustGet("currentUser").(user.User)
+
+	input.User = currentUser
+
+	newDonation, err := h.service.CreateDonation(input)
+	if err != nil {
+		response := helper.APIResponse("Donasi gagal dibuat!", http.StatusBadRequest, "error", nil)
+		c.JSON(http.StatusBadRequest, response)
+		return
+	}
+
+	response := helper.APIResponse("Donasi berhasil dibuat!", http.StatusOK, "success", donasi.FormatDonation(newDonation))
 	c.JSON(http.StatusOK, response)
 }

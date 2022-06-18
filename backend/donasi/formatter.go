@@ -5,7 +5,7 @@ import "strings"
 type DonationFormatter struct {
 	ID               int    `json:"id"`
 	UserID           int    `json:"user_id"`
-	Nama             string `json:"name"`
+	Nama             string `json:"nama"`
 	DeskripsiSingkat string `json:"deskripsi_singkat"`
 	ImageURL         string `json:"image_url"`
 	GoalAmount       int    `json:"goal_amount"`

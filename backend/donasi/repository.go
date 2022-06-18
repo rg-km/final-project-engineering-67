@@ -6,6 +6,7 @@ type Repository interface {
 	GetAll() ([]Donation, error)
 	GetByUserID(userID int) ([]Donation, error)
 	GetByID(ID int) (Donation, error)
+	Save(donation Donation) (Donation, error)
 }
 
 type repository struct {
@@ -46,4 +47,13 @@ func (r *repository) GetByID(ID int) (Donation, error) {
 	}
 
 	return donasi, nil
+}
+
+func (r *repository) Save(donation Donation) (Donation, error) {
+	err := r.db.Create(&donation).Error
+	if err != nil {
+		return donation, err
+	}
+
+	return donation, nil
 }
