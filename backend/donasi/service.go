@@ -1,6 +1,7 @@
 package donasi
 
 import (
+	"errors"
 	"fmt"
 
 	"github.com/gosimple/slug"
@@ -10,6 +11,7 @@ type Service interface {
 	GetDonasi(userID int) ([]Donation, error)
 	GetDonasiByID(input GetDonationDetailInput) (Donation, error)
 	CreateDonation(input CreateDonationInput) (Donation, error)
+	UpdateDonation(inputID GetDonationDetailInput, inputData CreateDonationInput) (Donation, error)
 }
 
 type service struct {
@@ -66,4 +68,28 @@ func (s *service) CreateDonation(input CreateDonationInput) (Donation, error) {
 	}
 
 	return newDonation, nil
+}
+
+func (s *service) UpdateDonation(inputID GetDonationDetailInput, inputData CreateDonationInput) (Donation, error) {
+	donation, err := s.repository.GetByID(inputID.ID)
+	if err != nil {
+		return donation, err
+	}
+
+	if donation.UserID != inputData.User.ID {
+		return donation, errors.New("ini bukan donasi milik anda")
+	}
+
+	donation.Nama = inputData.Nama
+	donation.DeskripsiSingkat = inputData.DeskripsiSingkat
+	donation.Deskripsi = inputData.Deskripsi
+	donation.GoalAmount = inputData.GoalAmount
+	donation.Perks = inputData.Perks
+
+	updatedDonation, err := s.repository.Update(donation)
+	if err != nil {
+		return updatedDonation, err
+	}
+
+	return updatedDonation, nil
 }

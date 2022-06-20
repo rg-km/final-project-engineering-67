@@ -3,7 +3,7 @@ package donasi
 import "final-project-engineering-67/user"
 
 type GetDonationDetailInput struct {
-	ID int `uri:"id"`
+	ID int `uri:"id" binding:"required"`
 }
 
 type CreateDonationInput struct {
