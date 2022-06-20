@@ -57,6 +57,7 @@ func main() {
 	api.GET("/donasi/:id", donasiHandler.GetDonation)
 	api.POST("/donasi", authMiddleware(authService, userService), donasiHandler.CreateDonation)
 	api.PUT("/donasi/:id", authMiddleware(authService, userService), donasiHandler.UpdateDonation)
+	api.POST("/donasi-images", authMiddleware(authService, userService), donasiHandler.UploadImage)
 	router.Run()
 }
 

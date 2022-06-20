@@ -8,6 +8,8 @@ type Repository interface {
 	GetByID(ID int) (Donation, error)
 	Save(donation Donation) (Donation, error)
 	Update(donation Donation) (Donation, error)
+	CreateImage(donationImage DonationImage) (DonationImage, error)
+	MarkAllImagesAsNonPrimary(donationID int) (bool, error)
 }
 
 type repository struct {
@@ -66,4 +68,22 @@ func (r *repository) Update(donation Donation) (Donation, error) {
 	}
 
 	return donation, nil
+}
+
+func (r *repository) CreateImage(donationImage DonationImage) (DonationImage, error) {
+	err := r.db.Create(&donationImage).Error
+	if err != nil {
+		return donationImage, err
+	}
+
+	return donationImage, nil
+}
+
+func (r *repository) MarkAllImagesAsNonPrimary(donationID int) (bool, error) {
+	err := r.db.Model(&DonationImage{}).Where("donation_id = ?", donationID).Update("is_primary", false).Error
+	if err != nil {
+		return false, err
+	}
+
+	return true, nil
 }

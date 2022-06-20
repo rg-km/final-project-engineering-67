@@ -4,6 +4,7 @@ import (
 	"final-project-engineering-67/donasi"
 	"final-project-engineering-67/helper"
 	"final-project-engineering-67/user"
+	"fmt"
 	"net/http"
 	"strconv"
 
@@ -115,5 +116,58 @@ func (h *donasiHandler) UpdateDonation(c *gin.Context) {
 	}
 
 	response := helper.APIResponse("Donasi berhasil diupdate!", http.StatusOK, "success", donasi.FormatDonation(updatedDonation))
+	c.JSON(http.StatusOK, response)
+}
+
+func (h *donasiHandler) UploadImage(c *gin.Context) {
+	var input donasi.CreateDonationImageInput
+
+	err := c.ShouldBind(&input)
+
+	if err != nil {
+		errors := helper.FormatValidationError(err)
+		errorMessage := gin.H{"errors": errors}
+
+		response := helper.APIResponse("Gagal upload donasi image", http.StatusUnprocessableEntity, "error", errorMessage)
+		c.JSON(http.StatusUnprocessableEntity, response)
+		return
+	}
+
+	currentUser := c.MustGet("currentUser").(user.User)
+	input.User = currentUser
+	userID := currentUser.ID
+
+	file, err := c.FormFile("file")
+	if err != nil {
+		data := gin.H{"is_uploaded": false}
+		response := helper.APIResponse("Gagal upload donasi image", http.StatusBadRequest, "error", data)
+
+		c.JSON(http.StatusBadRequest, response)
+		return
+	}
+
+	path := fmt.Sprintf("donation-images/%d-%s", userID, file.Filename)
+
+	err = c.SaveUploadedFile(file, path)
+	if err != nil {
+		data := gin.H{"is_uploaded": false}
+		response := helper.APIResponse("Gagal upload donasi image", http.StatusBadRequest, "error", data)
+
+		c.JSON(http.StatusBadRequest, response)
+		return
+	}
+
+	_, err = h.service.SaveDonationImage(input, path)
+	if err != nil {
+		data := gin.H{"is_uploaded": false}
+		response := helper.APIResponse("Gagal upload donasi image", http.StatusBadRequest, "error", data)
+
+		c.JSON(http.StatusBadRequest, response)
+		return
+	}
+
+	data := gin.H{"is_uploaded": true}
+	response := helper.APIResponse("Donasi image successfuly uploaded", http.StatusOK, "success", data)
+
 	c.JSON(http.StatusOK, response)
 }

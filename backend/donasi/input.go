@@ -14,3 +14,9 @@ type CreateDonationInput struct {
 	Perks            string `json:"perks" binding:"required"`
 	User             user.User
 }
+
+type CreateDonationImageInput struct {
+	DonationID int  `form:"donation_id" binding:"required"`
+	IsPrimary  bool `form:"is_primary"`
+	User       user.User
+}

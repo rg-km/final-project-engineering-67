@@ -12,6 +12,7 @@ type Service interface {
 	GetDonasiByID(input GetDonationDetailInput) (Donation, error)
 	CreateDonation(input CreateDonationInput) (Donation, error)
 	UpdateDonation(inputID GetDonationDetailInput, inputData CreateDonationInput) (Donation, error)
+	SaveDonationImage(input CreateDonationImageInput, fileLocation string) (DonationImage, error)
 }
 
 type service struct {
@@ -92,4 +93,37 @@ func (s *service) UpdateDonation(inputID GetDonationDetailInput, inputData Creat
 	}
 
 	return updatedDonation, nil
+}
+
+func (s *service) SaveDonationImage(input CreateDonationImageInput, fileLocation string) (DonationImage, error) {
+	donation, err := s.repository.GetByID(input.DonationID)
+	if err != nil {
+		return DonationImage{}, nil
+	}
+
+	if donation.UserID != input.User.ID {
+		return DonationImage{}, errors.New("ini bukan donasi milik anda")
+	}
+
+	isPrimary := 0
+	if input.IsPrimary {
+		isPrimary = 1
+
+		_, err := s.repository.MarkAllImagesAsNonPrimary(input.DonationID)
+		if err != nil {
+			return DonationImage{}, err
+		}
+	}
+
+	donationImage := DonationImage{}
+	donationImage.DonationID = input.DonationID
+	donationImage.IsPrimary = isPrimary
+	donationImage.Filename = fileLocation
+
+	newDonationImage, err := s.repository.CreateImage(donationImage)
+	if err != nil {
+		return newDonationImage, err
+	}
+
+	return newDonationImage, nil
 }
