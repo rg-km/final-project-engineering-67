@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Payment from "./components/Payment";
 import { DonasiPage } from "./pages/DonasiPage";
 import LandingPage from "./pages/LandingPage";
 import { LoginPage } from "./pages/LoginPage";
@@ -18,6 +19,7 @@ function App() {
           <Route path="*" element={<NotFoundPage/>} />
           <Route path="/signup" element={<SignUp/>} />
           <Route path="/tutorial" element={<TutorialPage/>} />
+          <Route path="/test1" element={<Payment/>} />
         </Routes>
       </BrowserRouter>
     </div>

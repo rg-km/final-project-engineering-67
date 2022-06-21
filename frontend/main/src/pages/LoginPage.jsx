@@ -1,11 +1,20 @@
+import { FaPause } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
+import Payment from '../components/Payment';
 import lock from '../pages/Login/images/lock.gif';
+import React from 'react';
 
 
 
 export const LoginPage = () => {
+    const [showModal, setShowModal] = React.useState(false);
+
     return(
         <section className="h-screen">
+            <Payment showModal={showModal} />
+            <button onClick={() => setShowModal(true)}>
+                <h1>Clik here</h1>
+            </button>
             <div className="container px-6 py-12 h-full">
                 <div className="flex justify-center items-center flex-wrap h-full g-6 text-gray-800">
                     <div className="md:w-8/12 lg:w-6/12 mb-12 md:mb-0">
