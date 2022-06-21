@@ -25,6 +25,8 @@ type Transaction struct {
 	User_ID     int       `db:"user_id"`
 	Amount      int       `db:"amount"`
 	Status      string    `db:"status"`
+	Va_Number   string    `db:"va_number"`
+	Bank        string    `db:"bank"`
 	Payment_url string    `db:"payment_url"`
 	Created_At  time.Time `db:"created_at"`
 	Updated_At  time.Time `db:"updated_at"`
@@ -84,6 +86,8 @@ func Migrate() (*sql.DB, error) {
 		user_id INTEGER,
 		amount INTEGER,
 		status VARCHAR(128),
+		va_number VARCHAR(128),
+		bank VARCHAR(128),
 		payment_url VARCHAR(128),
 		created_at DATETIME,
 		updated_at DATETIME
