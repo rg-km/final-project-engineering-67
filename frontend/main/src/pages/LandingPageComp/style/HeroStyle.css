@@ -1,0 +1,5 @@
+.myBg{
+    height: 100vh;
+    background: url('../images/sekolah.png') no-repeat center center fixed;
+    background-size: cover;
+}

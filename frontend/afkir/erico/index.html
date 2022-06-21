@@ -4,25 +4,159 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Upload Pict</title>
     <link rel="stylesheet" href="style.css">
+    <title>Dashboard</title>
 </head>
 <body>
-    <input type='file' />
-<br><img id="pict" src="#">
-</body>
-<script>
-    window.addEventListener('load', function() {
-  document.querySelector('input[type="file"]').addEventListener('change', function() {
-      if (this.files && this.files[0]) {
-          var img = document.querySelector('img');
-          img.onload = () => {
-              URL.revokeObjectURL(img.src);  
-          }
+    <ul>
+    <li> <a href="#home"> Home </a> </li>
+    <li> <a href="#Donasi"> Donasi </a> </li>
+    <li> <a href="#Tutorial"> Tutorial </a> </li>
+    <li> <a href="#Testimoni"> Testimoni </a> </li>
+    <li> <a href="daftar.html"> daftar </a> </li>
+    <li> <a href="masuk.html"> masuk </a> </li>
+    </ul>
 
-          img.src = URL.createObjectURL(this.files[0]); 
-      }
-  });
-});
-</script>
+    <div id="home">
+        <img src="../Dashboard/components/foto1.jpg" width="700px" height="450px">
+        <p>
+        DOAKAN 
+        <br>
+        <br> merupakan platform digital 
+        <br> yang dapat digunakan untuk 
+        <br> berdonasi kepada sekolah 
+        <br> sekolah yang membutuhkan
+    </p>
+        <img src="../Dashboard/components/orang.png" width="150" height="250px" id="orang1">
+        <img src="../Dashboard/components/orang2.png" width="150px" height="250px"id="orang2">
+        <img src="../Dashboard/components/koin.png" width="30px" height="30px" id="koin">
+    </div>
+
+
+    <div id="Tutorial">
+        <li> <h1> 1. registrasi </h1> </li>
+        <li> <h1> 2. upload foto profile </h1> </li>
+        <li> <h1> 3. klik tombol donasi </h1> </li>
+        <li> <h1> 4. klik tombol create </h1> </li>
+        <li> <h1> 5. masukan no rekening </h1> </li>
+        <li> <h1> 6. masukan nominal Donasi </h1> </li>
+    
+    </div>
+    <div id="Donasi">
+        <table border="1" style="background-color: #8CE0FC;">
+        <tr>
+           <td id="sekolah1" style="background-color:#CCADF1 ;" ><img src="../Dashboard/components/sekolah.jpg" width="500px" height="300px">
+            <h1> Bangun Sekolah Ambruk 
+            <br> di Pedalaman Sulbar </h1>
+                <h3> RP 60.000.000 </h3>
+                <p> 90% </p>
+            <span><input type="button" value="Kuy Donasi"> </input></span>
+        </td>
+       
+           <td id="sekolah2" style="background-color:#CCADF1 ;"><img src="../Dashboard/components/sekolah2.png" alt="sekolah" width="500px" height="300px">
+            <h1> Mari Bantu Biaya Pendidikan 
+                Santri </h1>
+                <h3> RP 90.000.000 </h3>
+                <p> 90% </p>
+            <a class="button1" href="KuyDonasi.html"> Kuy Donasi </a></button>
+        </td>  
+        
+        <td id="sekolah3" style="background-color:#CCADF1 ;"><img src="../Dashboard/components/sekolah3.jpg" alt="sekolah" width="500px" height="300px">
+           
+            <h1> Yuk Bantu Sekolah SD 
+                <br> di Pedalaman </h1>
+                <h3> RP 120.000.000 </h3>
+                <p> 50% </p>
+           
+            <a class="button1" href="KuyDonasi.html"> Kuy Donasi </a></button>
+        </td>
+        
+        </tr>
+        <tr></tr>
+        <tr></tr>
+        <tr></tr>
+        <tr></tr>
+        <tr></tr>
+        <tr></tr>
+        <tr></tr>
+        <tr></tr>
+        <tr></tr>
+            <td id="sekolah4" style="background-color:#CCADF1 ;"><img src="../Dashboard/components/sekolah4.jpg" width="500px" height="300px">
+            <h1> Membantu Anak-Anak Disabilitas </h1>
+                <h3> RP 20.000.000 </h3>
+                <p> 80% </p>
+             <a class="button1" href="KuyDonasi.html"> Kuy Donasi </a></button>
+         </td>
+           
+            <td id="sekolah5" style="background-color:#CCADF1 ;"><img src="../Dashboard/components/sekolah5.jpg" alt="sekolah" width="500px" height="300px">
+                <h1> Menambah Buku Buku 
+                    Pembelajaran ke Sekolah Pedalaman </h1>
+                <h3> RP 60.000.000 </h3>
+                <p> 50% </p>
+                <a class="button1" href="KuyDonasi.html"> Kuy Donasi </a></button>
+         </td>  
+         
+         <td id="sekolah6" style="background-color:#CCADF1 ;"><img src="../Dashboard/components/sekolah6.jpg" alt="sekolah" width="500px" height="300px">
+             
+            <h1> Membangun Kembali 
+            <br> Sekolah Yang roboh di Pedalaman </h1>
+            <h3> RP 60.000.000 </h3>
+            <p> 50% </p>
+            
+            <a class="button1" href="KuyDonasi.html"> Kuy Donasi </a></button>
+         </td>
+        </table>
+        </div>
+
+    <div class="Testimoni" id="Testimoni">
+        <div class="Box1">
+            <img src="../Dashboard/profile/profile1.png" width="100px" height="100px">
+             <h2> Terimakasih orang baik. </h2>
+    
+        </div> 
+    
+        <div class="Box2">
+            <img src="../Dashboard/profile/profile2.png" width="100px" height="100px">
+            <h2> Semoga di Beri Umur Panjang </h2>
+       
+        </div> 
+       <div class="Box3">
+        <img src="../Dashboard/profile/profile3.png" width="100px" height="100px">
+        <h2> Semoga di beri kelimpahan </h2>
+    
+        </div>
+        
+        <div class="Box4">
+            <img src="../Dashboard/profile/profile4.png" width="100px" height="100px">
+            <h2> Semoga Tercapai Segala Mimpinya </h2>
+    
+       </div> 
+       
+       <div class="Box5">
+        <img src="../Dashboard/profile/profile5.png" width="100px" height="100px">
+        <h2> Semoga Sekolahnya Cepat Jadi  </h2>
+    
+        </div> 
+    
+        <div class="Box6">
+            <img src="../Dashboard/profile/profile6.png" width="100px" height="100px">
+            <h2> Semoga Sekolahnya Mendapat Fasilitas Yang Memadai </h2>
+    
+       </div> 
+    
+       <div class="Box7">
+        <img src="../Dashboard/profile/profile7.png" width="100px" height="100px">
+        <h2> Semoga Sekolah nya Cepat di Perbarui </h2>
+    
+    </div> 
+    
+    <div class="Box8">
+        <img src="../Dashboard/profile/profile8.png" width="100px" height="100px">
+        <h2> Semoga Sekolahnya Bisa Menghasilkan Lulusan Terbaik </h2>
+    
+    </div> 
+
+    </div>
+
+</body>
 </html>
