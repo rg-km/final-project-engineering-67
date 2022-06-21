@@ -17,7 +17,7 @@ export const NavigationBar = () => {
     return (
         <div className="sticky top-0 border-r-gray-90 bg-[#1d1f23]/70 backdrop-blur-sm z-20">
             <div className='container flex justify-between items-center h-20 mx-auto px-4 text-white '>
-                <h1 className='w-full text-2xl font-bold text-[#b8b9fa]'>DOAKAN</h1>
+                <h1 className='w-full text-2xl font-bold text-purple'>DOAKAN</h1>
                 <ul className='hidden md:flex'>
                     <li className='p-5'>
                         <Link to="/">Home</Link>

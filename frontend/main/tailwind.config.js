@@ -18,9 +18,10 @@ module.exports = {
     },
     extend: {
       colors: {
+        purple : '#b8b9fa',
         softLight : '#f7f7f7',
         skinColor : '#e6d8d7',
-        mainColor : '#fff3e1',
+        mainColor : '#1d1f23',
         chocolate : '#74341c',
         darkSkins : '#c09c83',
         primary: '#0ea5e9',
