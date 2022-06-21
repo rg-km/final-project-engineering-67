@@ -37,7 +37,7 @@ export const LoginPage = () => {
                                 <p className="text-center font-semibold mx-4 mb-0">OR</p>
                             </div>
                             <div className='grid grid-cols-2 gap-4'>
-                                <Link to='/'>
+                                <Link to='/signup'>
                                     <button className="py-4 text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg transition duration-150 ease-in-out w-full flex justify-center items-center mb-3" style={{backgroundColor: '#3b5998'}}>
                                         Sign Up
                                     </button>
