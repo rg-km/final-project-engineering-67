@@ -1,18 +1,18 @@
-import React from 'react';
-import {
-  ChakraProvider,
-  theme,
-} from '@chakra-ui/react';
-import { HeaderNav } from './components/Header';
-import { SuperHero } from './components/Hero';
-import DashBoardMain from './pages/Dashboard';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import LandingPage from "./pages/LandingPage";
+import { LoginPage } from "./pages/LoginPage";
+
 
 function App() {
   return (
-    <ChakraProvider theme={theme}>
-      <HeaderNav/>
-      <DashBoardMain/>
-    </ChakraProvider>
+    <div>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<LandingPage/>} />
+          <Route path="/login" element={<LoginPage/>} />
+        </Routes>
+      </BrowserRouter>
+    </div>
   );
 }
 

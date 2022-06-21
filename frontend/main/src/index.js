@@ -1,16 +1,12 @@
-import { ChakraProvider, ColorModeScript } from '@chakra-ui/react';
-import React, { StrictMode } from 'react';
-import * as ReactDOM from 'react-dom/client';
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import './index.css';
 import App from './App';
 
-const container = document.getElementById('root');
-const root = ReactDOM.createRoot(container);
-
+const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <StrictMode>
-    <ChakraProvider>
-      <ColorModeScript initialColorMode='light' />
-      <App />
-    </ChakraProvider>
-  </StrictMode>
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
 );
+
