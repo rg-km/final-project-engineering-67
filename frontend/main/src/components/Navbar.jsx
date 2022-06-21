@@ -1,6 +1,8 @@
+import { faArrowRightToBracket } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, {useState} from "react";
 import {AiOutlineClose, AiOutlineMenu} from 'react-icons/ai';
-import {Link, Outlet} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 
 
 //  bg-[#1d1f23]/70 backdrop-blur-sm
@@ -29,11 +31,9 @@ export const NavigationBar = () => {
                     <li className='p-5'>
                         <Link to="/aboutus">About</Link>
                     </li>
-                    <li className='px-5'>
-                        <Link to='/login'>
-                            <button class="px-9 py-2 text-white bg-[#595bc9] rounded-full baseline hover:bg-[#b8b9fa] ease-in-out duration-300 text-sm">
-                                Log In
-                            </button>
+                    <li className='p-5'>
+                        <Link to="/login">
+                            <FontAwesomeIcon icon={faArrowRightToBracket} className="text-2xl" />
                         </Link>
                     </li>
                 </ul>
@@ -54,10 +54,12 @@ export const NavigationBar = () => {
                     <li className='w-screen p-4 bg-[#1d1f23]/70 backdrop-blur-sm text-center'>
                         <Link to="/aboutus">About</Link>
                     </li>
+                    <li className='w-screen p-4 bg-[#1d1f23]/70 backdrop-blur-sm text-center'>
+                        <Link to="/login">Log in</Link>
+                    </li>
                 </ul>
                 </div>
             </div>
-            {/* <Outlet /> */}
         </div>
 
     );
