@@ -52,6 +52,7 @@ func main() {
 	api.POST("/login", userHandler.Login)
 	api.POST("/email_checkers", userHandler.CheckEmailAvailable)
 	api.POST("/upload_image_profile", authMiddleware(authService, userService), userHandler.UploadImageProfile)
+	api.GET("/users/fetch", authMiddleware(authService, userService), userHandler.FetchUser)
 
 	api.GET("/donasi", donasiHandler.GetDonations)
 	api.GET("/donasi/:id", donasiHandler.GetDonation)
