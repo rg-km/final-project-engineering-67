@@ -41,3 +41,18 @@ func (h *transactionHandler) GetDonationTransactions(c *gin.Context) {
 	response := helper.APIResponse("Donation's transactions", http.StatusOK, "success", transaction.FormatDonationTransactions(transactions))
 	c.JSON(http.StatusOK, response)
 }
+
+func (h *transactionHandler) GetUserTransactions(c *gin.Context) {
+	currentUser := c.MustGet("currentUser").(user.User)
+	userID := currentUser.ID
+
+	transactions, err := h.service.GetTransactionsByUserID(userID)
+	if err != nil {
+		response := helper.APIResponse("Gagal menampilkan user transactions", http.StatusBadRequest, "error", nil)
+		c.JSON(http.StatusBadRequest, response)
+		return
+	}
+
+	response := helper.APIResponse("User's transactions", http.StatusOK, "success", transaction.FormateUserTransactions(transactions))
+	c.JSON(http.StatusOK, response)
+}

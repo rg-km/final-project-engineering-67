@@ -1,6 +1,7 @@
 package transaction
 
 import (
+	"final-project-engineering-67/donasi"
 	"final-project-engineering-67/user"
 	"time"
 )
@@ -13,6 +14,7 @@ type Transaction struct {
 	Status     string
 	PaymentURL string
 	User       user.User
+	Donation   donasi.Donation
 	CreatedAt  time.Time
 	UpdatedAt  time.Time
 }

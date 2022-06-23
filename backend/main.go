@@ -68,7 +68,7 @@ func main() {
 
 	// domain transaction
 	api.GET("/donasi/:id/transactions", authMiddleware(authService, userService), transactionHandler.GetDonationTransactions)
-
+	api.GET("/transactions", authMiddleware(authService, userService), transactionHandler.GetUserTransactions)
 	router.Run()
 }
 
