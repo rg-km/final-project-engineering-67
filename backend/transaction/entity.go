@@ -12,6 +12,8 @@ type Transaction struct {
 	UserID     int
 	Amount     int
 	Status     string
+	VANumber   string
+	Bank       string
 	PaymentURL string
 	User       user.User
 	Donation   donasi.Donation

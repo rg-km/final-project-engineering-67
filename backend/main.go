@@ -5,6 +5,7 @@ import (
 	"final-project-engineering-67/donasi"
 	"final-project-engineering-67/handler"
 	"final-project-engineering-67/helper"
+	"final-project-engineering-67/payment"
 	"final-project-engineering-67/transaction"
 	"final-project-engineering-67/user"
 	"log"
@@ -42,7 +43,8 @@ func main() {
 	userService := user.NewService(userRepository)
 	donasiService := donasi.NewService(donasiRepository)
 	authService := auth.NewService()
-	transactionService := transaction.NewService(transactionRepository, donasiRepository)
+	paymentService := payment.NewService()
+	transactionService := transaction.NewService(transactionRepository, donasiRepository, paymentService)
 
 	userHandler := handler.NewUserHandler(userService, authService)
 	donasiHandler := handler.NewDonasiHandler(donasiService)
@@ -69,6 +71,8 @@ func main() {
 	// domain transaction
 	api.GET("/donasi/:id/transactions", authMiddleware(authService, userService), transactionHandler.GetDonationTransactions)
 	api.GET("/transactions", authMiddleware(authService, userService), transactionHandler.GetUserTransactions)
+	api.POST("/transactions", authMiddleware(authService, userService), transactionHandler.CreateTransaction)
+	api.POST("/transactions/notification", transactionHandler.GetNotification)
 	router.Run()
 }
 
