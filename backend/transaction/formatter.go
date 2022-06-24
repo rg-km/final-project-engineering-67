@@ -37,6 +37,8 @@ type UserTransactionFormatter struct {
 	ID        int               `json:"id"`
 	Amount    int               `json:"amount"`
 	Status    string            `json:"status"`
+	VANumber  string            `json:"va_number"`
+	Bank      string            `json:"bank"`
 	CreatedAt time.Time         `json:"created_at"`
 	Donation  DonationFormatter `json:"donation"`
 }
@@ -51,6 +53,9 @@ func FormatUserTransaction(transaction Transaction) UserTransactionFormatter {
 	formatter.ID = transaction.ID
 	formatter.Amount = transaction.Amount
 	formatter.Status = transaction.Status
+	formatter.VANumber = transaction.VANumber
+	formatter.Bank = transaction.Bank
+	formatter.CreatedAt = transaction.CreatedAt
 
 	donationFormatter := DonationFormatter{}
 	donationFormatter.Nama = transaction.Donation.Nama

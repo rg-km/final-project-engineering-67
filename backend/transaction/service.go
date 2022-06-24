@@ -57,6 +57,8 @@ func (s *service) CreateTransaction(input CreateTransactionInput) (Transaction, 
 	transaction.Amount = input.Amount
 	transaction.UserID = input.User.ID
 	transaction.Status = "pending"
+	transaction.VANumber = "0"
+	transaction.Bank = "default"
 
 	newTransaction, err := s.repository.Save(transaction)
 	if err != nil {
