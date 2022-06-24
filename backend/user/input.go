@@ -15,3 +15,20 @@ type LoginInput struct {
 type CheckEmailInput struct {
 	Email string `json:"email" binding:"required,email"`
 }
+
+// web CMS
+type FormCreateUserInput struct {
+	Nama      string `form:"nama" binding:"required"`
+	Email     string `form:"email" binding:"required"`
+	Pekerjaan string `form:"pekerjaan" binding:"required"`
+	Password  string `form:"password" binding:"required"`
+	Error     error
+}
+
+type FormUpdateUserInput struct {
+	ID        int
+	Nama      string `form:"nama" binding:"required"`
+	Email     string `form:"email" binding:"required"`
+	Pekerjaan string `form:"pekerjaan" binding:"required"`
+	Error     error
+}

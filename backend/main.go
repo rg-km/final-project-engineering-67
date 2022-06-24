@@ -10,9 +10,13 @@ import (
 	"final-project-engineering-67/user"
 	"log"
 	"net/http"
+	"path/filepath"
 	"strings"
 
+	webHandler "final-project-engineering-67/web/handler"
+
 	"github.com/dgrijalva/jwt-go"
+	"github.com/gin-contrib/multitemplate"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 	"gorm.io/driver/sqlite"
@@ -50,9 +54,26 @@ func main() {
 	donasiHandler := handler.NewDonasiHandler(donasiService)
 	transactionHandler := handler.NewTransactionHandler(transactionService)
 
+	//web cms
+	userWebHandler := webHandler.NewUserHandler(userService)
+	dashboardWebHandler := webHandler.NewDashboardHandler()
+
 	router := gin.Default()
 	router.Use(CORSMiddleware())
+
+	router.HTMLRender = loadTemplates("./web/templates")
+
 	router.Static("/images", "./images")
+	router.Static("/donation-images", "./donation-images")
+
+	// web CMS
+	router.Static("/css", "./web/assets/css")
+	router.Static("/js", "./web/assets/js")
+	router.Static("/imagess", "./web/assets/imagess")
+	router.Static("/libs", "./web/assets/libs")
+	router.Static("/fonts", "./web/assets/fonts")
+	// end CMS
+
 	api := router.Group("api/v1")
 
 	// domain user
@@ -74,6 +95,17 @@ func main() {
 	api.GET("/transactions", authMiddleware(authService, userService), transactionHandler.GetUserTransactions)
 	api.POST("/transactions", authMiddleware(authService, userService), transactionHandler.CreateTransaction)
 	api.POST("/transactions/notification", transactionHandler.GetNotification)
+
+	// web CMS
+	router.GET("/dashboard", dashboardWebHandler.Dashboard)
+	router.GET("/users", userWebHandler.Index)
+	router.GET("/users/new", userWebHandler.New)
+	router.POST("/users", userWebHandler.Create)
+	router.GET("/users/edit/:id", userWebHandler.Edit)
+	router.POST("/users/update/:id", userWebHandler.Update)
+	router.GET("/users/avatar/:id", userWebHandler.NewAvatar)
+	router.POST("/users/avatar/:id", userWebHandler.CreateAvatar)
+
 	router.Run()
 }
 
@@ -137,4 +169,46 @@ func CORSMiddleware() gin.HandlerFunc {
 
 		c.Next()
 	}
+}
+
+//=======================WEB CMS=================================
+func loadTemplates(templatesDir string) multitemplate.Renderer {
+	r := multitemplate.NewRenderer()
+
+	articleLayouts, err := filepath.Glob(templatesDir + "/layouts/index.html")
+	if err != nil {
+		panic(err.Error())
+	}
+
+	articles, err := filepath.Glob(templatesDir + "/**/*")
+	if err != nil {
+		panic(err.Error())
+	}
+
+	// Generate our templates map from our articleLayouts/ and articles/ directories
+	for _, article := range articles {
+		layoutCopy := make([]string, len(articleLayouts))
+		copy(layoutCopy, articleLayouts)
+		files := append(layoutCopy, article)
+		r.AddFromFiles(filepath.Base(article), files...)
+	}
+
+	adminLayouts, err := filepath.Glob(templatesDir + "/layouts/login.html")
+	if err != nil {
+		panic(err.Error())
+	}
+
+	admins, err := filepath.Glob(templatesDir + "/session/*.html")
+	if err != nil {
+		panic(err.Error())
+	}
+
+	// Generate our templates map from our adminLayouts/ and admins/ directories
+	for _, admin := range admins {
+		layoutCopy := make([]string, len(adminLayouts))
+		copy(layoutCopy, adminLayouts)
+		files := append(layoutCopy, admin)
+		r.AddFromFiles(filepath.Base(admin), files...)
+	}
+	return r
 }
