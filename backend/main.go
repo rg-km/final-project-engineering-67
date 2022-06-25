@@ -58,6 +58,7 @@ func main() {
 	userWebHandler := webHandler.NewUserHandler(userService)
 	dashboardWebHandler := webHandler.NewDashboardHandler()
 	donationWebHandler := webHandler.NewDonationHandler(donasiService, userService)
+	transactionWebHandler := webHandler.NewTransactionHandler(transactionService)
 
 	router := gin.Default()
 	router.Use(CORSMiddleware())
@@ -115,6 +116,8 @@ func main() {
 	router.GET("/donations/edit/:id", donationWebHandler.Edit)
 	router.POST("/donations/update/:id", donationWebHandler.Update)
 	router.GET("/donations/show/:id", donationWebHandler.Show)
+
+	router.GET("/transactions", transactionWebHandler.Index)
 
 	router.Run()
 }

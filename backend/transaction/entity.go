@@ -4,6 +4,8 @@ import (
 	"final-project-engineering-67/donasi"
 	"final-project-engineering-67/user"
 	"time"
+
+	"github.com/leekchan/accounting"
 )
 
 type Transaction struct {
@@ -19,4 +21,9 @@ type Transaction struct {
 	Donation   donasi.Donation
 	CreatedAt  time.Time
 	UpdatedAt  time.Time
+}
+
+func (t Transaction) AmountFormatIDR() string {
+	ac := accounting.Accounting{Symbol: "Rp ", Precision: 2, Thousand: ".", Decimal: ","}
+	return ac.FormatMoney(t.Amount)
 }
