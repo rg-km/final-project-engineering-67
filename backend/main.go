@@ -57,6 +57,7 @@ func main() {
 	//web cms
 	userWebHandler := webHandler.NewUserHandler(userService)
 	dashboardWebHandler := webHandler.NewDashboardHandler()
+	donationWebHandler := webHandler.NewDonationHandler(donasiService, userService)
 
 	router := gin.Default()
 	router.Use(CORSMiddleware())
@@ -105,6 +106,15 @@ func main() {
 	router.POST("/users/update/:id", userWebHandler.Update)
 	router.GET("/users/avatar/:id", userWebHandler.NewAvatar)
 	router.POST("/users/avatar/:id", userWebHandler.CreateAvatar)
+
+	router.GET("/donations", donationWebHandler.Index)
+	router.GET("/donations/new", donationWebHandler.New)
+	router.POST("/donations", donationWebHandler.Create)
+	router.GET("/donations/image/:id", donationWebHandler.NewImage)
+	router.POST("/donations/image/:id", donationWebHandler.CreateImage)
+	router.GET("/donations/edit/:id", donationWebHandler.Edit)
+	router.POST("/donations/update/:id", donationWebHandler.Update)
+	router.GET("/donations/show/:id", donationWebHandler.Show)
 
 	router.Run()
 }

@@ -20,3 +20,25 @@ type CreateDonationImageInput struct {
 	IsPrimary  bool `form:"is_primary"`
 	User       user.User
 }
+
+type FormCreateDonationInput struct {
+	Nama             string `form:"nama" binding:"required"`
+	DeskripsiSingkat string `form:"deskripsi_singkat" binding:"required"`
+	Deskripsi        string `form:"deskripsi" binding:"required"`
+	GoalAmount       int    `form:"goal_amount" binding:"required"`
+	Perks            string `form:"perks" binding:"required"`
+	UserID           int    `form:"user_id" binding:"required"`
+	Users            []user.User
+	Error            error
+}
+
+type FormUpdateDonationInput struct {
+	ID               int
+	Nama             string `form:"nama" binding:"required"`
+	DeskripsiSingkat string `form:"deskripsi_singkat" binding:"required"`
+	Deskripsi        string `form:"deskripsi" binding:"required"`
+	GoalAmount       int    `form:"goal_amount" binding:"required"`
+	Perks            string `form:"perks" binding:"required"`
+	Error            error
+	User             user.User
+}
