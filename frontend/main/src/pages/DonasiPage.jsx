@@ -1,9 +1,16 @@
 import React from "react";
+import Footer from "../components/Footer";
+import { NavigationBar } from "../components/Navbar";
+import HeroDonasi from "./DonasiPage/DonasiHero";
 
 
 
 export const DonasiPage = () => {
     return(
-        <h1>Test</h1>
+        <div>
+            <NavigationBar/>
+            <HeroDonasi/>
+            <Footer/>
+        </div>
     );
 }

@@ -51,7 +51,7 @@ export const LoginPage = () => {
                                         Sign Up
                                     </button>
                                 </Link>
-                                <Link to='/home'>
+                                <Link to='/'>
                                     <button className="py-4 text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg transition duration-150 ease-in-out w-full flex justify-center items-center mb-3 bg-slate-500">
                                         Home
                                     </button>
