@@ -17,6 +17,8 @@ import (
 
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-contrib/multitemplate"
+	"github.com/gin-contrib/sessions"
+	"github.com/gin-contrib/sessions/cookie"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 	"gorm.io/driver/sqlite"
@@ -59,9 +61,14 @@ func main() {
 	dashboardWebHandler := webHandler.NewDashboardHandler()
 	donationWebHandler := webHandler.NewDonationHandler(donasiService, userService)
 	transactionWebHandler := webHandler.NewTransactionHandler(transactionService)
+	sessionWebHandler := webHandler.NewSessionHandler(userService)
 
 	router := gin.Default()
 	router.Use(CORSMiddleware())
+
+	//=======================START WEB CMS=================================
+	cookieStore := cookie.NewStore([]byte(auth.SECRET_KEY))
+	router.Use(sessions.Sessions("doakan", cookieStore))
 
 	router.HTMLRender = loadTemplates("./web/templates")
 
@@ -99,25 +106,30 @@ func main() {
 	api.POST("/transactions/notification", transactionHandler.GetNotification)
 
 	// web CMS
-	router.GET("/dashboard", dashboardWebHandler.Dashboard)
-	router.GET("/users", userWebHandler.Index)
-	router.GET("/users/new", userWebHandler.New)
-	router.POST("/users", userWebHandler.Create)
-	router.GET("/users/edit/:id", userWebHandler.Edit)
-	router.POST("/users/update/:id", userWebHandler.Update)
-	router.GET("/users/avatar/:id", userWebHandler.NewAvatar)
-	router.POST("/users/avatar/:id", userWebHandler.CreateAvatar)
+	router.GET("/dashboard", authAdminMiddleware(), dashboardWebHandler.Dashboard)
+	router.GET("/users", authAdminMiddleware(), userWebHandler.Index)
+	router.GET("/users/new", authAdminMiddleware(), userWebHandler.New)
+	router.POST("/users", authAdminMiddleware(), userWebHandler.Create)
+	router.GET("/users/edit/:id", authAdminMiddleware(), userWebHandler.Edit)
+	router.POST("/users/update/:id", authAdminMiddleware(), userWebHandler.Update)
+	router.GET("/users/avatar/:id", authAdminMiddleware(), userWebHandler.NewAvatar)
+	router.POST("/users/avatar/:id", authAdminMiddleware(), userWebHandler.CreateAvatar)
 
-	router.GET("/donations", donationWebHandler.Index)
-	router.GET("/donations/new", donationWebHandler.New)
-	router.POST("/donations", donationWebHandler.Create)
-	router.GET("/donations/image/:id", donationWebHandler.NewImage)
-	router.POST("/donations/image/:id", donationWebHandler.CreateImage)
-	router.GET("/donations/edit/:id", donationWebHandler.Edit)
-	router.POST("/donations/update/:id", donationWebHandler.Update)
-	router.GET("/donations/show/:id", donationWebHandler.Show)
+	router.GET("/donations", authAdminMiddleware(), donationWebHandler.Index)
+	router.GET("/donations/new", authAdminMiddleware(), donationWebHandler.New)
+	router.POST("/donations", authAdminMiddleware(), donationWebHandler.Create)
+	router.GET("/donations/image/:id", authAdminMiddleware(), donationWebHandler.NewImage)
+	router.POST("/donations/image/:id", authAdminMiddleware(), donationWebHandler.CreateImage)
+	router.GET("/donations/edit/:id", authAdminMiddleware(), donationWebHandler.Edit)
+	router.POST("/donations/update/:id", authAdminMiddleware(), donationWebHandler.Update)
+	router.GET("/donations/show/:id", authAdminMiddleware(), donationWebHandler.Show)
 
-	router.GET("/transactions", transactionWebHandler.Index)
+	router.GET("/transactions", authAdminMiddleware(), transactionWebHandler.Index)
+
+	router.GET("/login", sessionWebHandler.New)
+	router.POST("/login", sessionWebHandler.Create)
+	router.GET("/logout", sessionWebHandler.Destroy)
+	// end CMS
 
 	router.Run()
 }
@@ -181,6 +193,19 @@ func CORSMiddleware() gin.HandlerFunc {
 		}
 
 		c.Next()
+	}
+}
+
+func authAdminMiddleware() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		session := sessions.Default(c)
+
+		userIDSession := session.Get("user_id")
+
+		if userIDSession == nil {
+			c.Redirect(http.StatusFound, "/login")
+			return
+		}
 	}
 }
 
