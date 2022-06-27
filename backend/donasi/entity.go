@@ -3,6 +3,8 @@ package donasi
 import (
 	"final-project-engineering-67/user"
 	"time"
+
+	"github.com/leekchan/accounting"
 )
 
 type Donation struct {
@@ -20,6 +22,16 @@ type Donation struct {
 	UpdatedAt        time.Time
 	DonationImages   []DonationImage
 	User             user.User
+}
+
+func (c Donation) GoalAmountFormatIDR() string {
+	ac := accounting.Accounting{Symbol: "Rp ", Precision: 2, Thousand: ".", Decimal: ","}
+	return ac.FormatMoney(c.GoalAmount)
+}
+
+func (c Donation) CurrentAmountFormatIDR() string {
+	ac := accounting.Accounting{Symbol: "Rp ", Precision: 2, Thousand: ".", Decimal: ","}
+	return ac.FormatMoney(c.CurrentAmount)
 }
 
 type DonationImage struct {

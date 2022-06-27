@@ -12,6 +12,9 @@ type Service interface {
 	IsEmailAvailable(input CheckEmailInput) (bool, error)
 	SaveImageProfile(ID int, fileLocation string) (User, error)
 	GetUserByID(ID int) (User, error)
+	GetAllUsers() ([]User, error)
+	UpdateUser(input FormUpdateUserInput) (User, error)
+	SaveAvatar(ID int, fileLocation string) (User, error)
 }
 
 type service struct {
@@ -107,4 +110,47 @@ func (s *service) GetUserByID(ID int) (User, error) {
 	}
 
 	return user, nil
+}
+
+func (s *service) GetAllUsers() ([]User, error) {
+	users, err := s.repository.FindAll()
+	if err != nil {
+		return users, err
+	}
+
+	return users, nil
+}
+
+func (s *service) UpdateUser(input FormUpdateUserInput) (User, error) {
+	user, err := s.repository.FindByID(input.ID)
+	if err != nil {
+		return user, err
+	}
+
+	user.Nama = input.Nama
+	user.Email = input.Email
+	user.Pekerjaan = input.Pekerjaan
+
+	updatedUser, err := s.repository.Update(user)
+	if err != nil {
+		return updatedUser, err
+	}
+
+	return updatedUser, nil
+}
+
+func (s *service) SaveAvatar(ID int, fileLocation string) (User, error) {
+	user, err := s.repository.FindByID(ID)
+	if err != nil {
+		return user, err
+	}
+
+	user.ImageProfile = fileLocation
+
+	updatedUser, err := s.repository.Update(user)
+	if err != nil {
+		return updatedUser, err
+	}
+
+	return updatedUser, nil
 }

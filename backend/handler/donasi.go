@@ -78,8 +78,8 @@ func (h *donasiHandler) CreateDonation(c *gin.Context) {
 		return
 	}
 
-	response := helper.APIResponse("Donasi berhasil dibuat!", http.StatusOK, "success", donasi.FormatDonation(newDonation))
-	c.JSON(http.StatusOK, response)
+	response := helper.APIResponse("Donasi berhasil dibuat!", http.StatusCreated, "success", donasi.FormatDonation(newDonation))
+	c.JSON(http.StatusCreated, response)
 }
 
 func (h *donasiHandler) UpdateDonation(c *gin.Context) {
