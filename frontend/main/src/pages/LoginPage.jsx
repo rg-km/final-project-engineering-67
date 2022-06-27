@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/img-redundant-alt */
 import { Link, useNavigate } from 'react-router-dom';
 import lock from '../pages/Login/images/lock.gif';
 import React from 'react';
@@ -13,19 +14,19 @@ export const LoginPage = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            let request = await axios.post('http://doakan.onprogress.my.id/api/v1/login', {
+            let request = await axios.post('https://doakan.onprogress.my.id/api/v1/login', {
                 email: email,
                 password: password,
             })
             console.log(request);
-            localStorage.setItem('token',request.data.data.token);
+            localStorage.setItem('token', request.data.data.token);
             navigate('/');
         } catch (error) {
             alert("test")
         }
     }
 
-    return(
+    return (
         <section className="h-screen">
             {/* <Payment showModal={showModal} /> */}
             {/* <button onClick={() => setShowModal(true)}>
@@ -41,7 +42,7 @@ export const LoginPage = () => {
                         <form onSubmit={handleSubmit}>
                             {/* Email input */}
                             <div className="mb-6">
-                                <input type="text" className="form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" placeholder="Email address" onChange={e => setEmail(e.target.value)}/>
+                                <input type="text" className="form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" placeholder="Email address" onChange={e => setEmail(e.target.value)} />
                             </div>
                             {/* Password input */}
                             <div className="mb-6">
@@ -56,14 +57,14 @@ export const LoginPage = () => {
                             </div>
                             {/* Submit button */}
                             <button type="submit" className="inline-block px-7 py-3 bg-darkBlue text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-purple hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out w-full">
-                            Sign in
+                                Sign in
                             </button>
                             <div className="flex items-center my-4 before:flex-1 before:border-t before:border-gray-300 before:mt-0.5 after:flex-1 after:border-t after:border-gray-300 after:mt-0.5">
                                 <p className="text-center font-semibold mx-4 mb-0">OR</p>
                             </div>
                             <div className='grid grid-cols-2 gap-4'>
                                 <Link to='/signup'>
-                                    <button className="py-4 text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg transition duration-150 ease-in-out w-full flex justify-center items-center mb-3" style={{backgroundColor: '#3b5998'}}>
+                                    <button className="py-4 text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg transition duration-150 ease-in-out w-full flex justify-center items-center mb-3" style={{ backgroundColor: '#3b5998' }}>
                                         Sign Up
                                     </button>
                                 </Link>
