@@ -1,19 +1,33 @@
-import { Link } from 'react-router-dom';
-import Payment from '../components/Payment';
+import { Link, useNavigate } from 'react-router-dom';
 import lock from '../pages/Login/images/lock.gif';
 import React from 'react';
-import axios from 'axios';
-import qs from 'querystring';
+import axios from "axios";
+import { useState } from "react";
 
-
-const apiLogin = 'doakan.onprogress.my.id/api/v1/login';
 
 export const LoginPage = () => {
-    const [showModal, setShowModal] = React.useState(false);
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const navigate = useNavigate();
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            let request = await axios.post('http://doakan.onprogress.my.id/api/v1/login', {
+                email: email,
+                password: password,
+            })
+            console.log(request);
+            localStorage.setItem('token',request.data.data.token);
+            navigate('/');
+        } catch (error) {
+            alert("test")
+        }
+    }
 
     return(
         <section className="h-screen">
-            <Payment showModal={showModal} />
+            {/* <Payment showModal={showModal} /> */}
             {/* <button onClick={() => setShowModal(true)}>
                 <h1>Clik here</h1>
             </button> */}
@@ -24,14 +38,14 @@ export const LoginPage = () => {
                     </div>
                     <div className="md:w-8/12 lg:w-5/12 lg:ml-20">
                         <h1 className='text-center font-bold my-6 text-4xl'>Login</h1>
-                        <form>
+                        <form onSubmit={handleSubmit}>
                             {/* Email input */}
                             <div className="mb-6">
-                                <input type="text" className="form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" placeholder="Email address" />
+                                <input type="text" className="form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" placeholder="Email address" onChange={e => setEmail(e.target.value)}/>
                             </div>
                             {/* Password input */}
                             <div className="mb-6">
-                                <input type="password" className="form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" placeholder="Password" />
+                                <input type="password" className="form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" placeholder="Password" onChange={e => setPassword(e.target.value)} />
                             </div>
                             <div className="flex justify-between items-center mb-6">
                                 <div className="form-group form-check">
