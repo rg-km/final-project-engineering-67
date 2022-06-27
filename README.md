@@ -1,4 +1,3 @@
-﻿# final-project-engineering-67
 # DOAKAN (DONASI PENDIDIKAN)
 
 build with go
