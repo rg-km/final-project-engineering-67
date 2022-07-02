@@ -1,4 +1,4 @@
-import { faArrowRightToBracket } from "@fortawesome/free-solid-svg-icons";
+import { faArrowRightToBracket, faUser } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, {useState} from "react";
 import {AiOutlineClose, AiOutlineMenu} from 'react-icons/ai';
@@ -17,7 +17,9 @@ export const NavigationBar = () => {
     return (
         <div className="sticky top-0 border-r-gray-90 bg-[#1d1f23]/70 backdrop-blur-sm z-20">
             <div className='container flex justify-between items-center h-20 mx-auto px-4 text-white '>
-                <h1 className='w-full text-2xl font-bold text-purple'>DOAKAN</h1>
+                <h1 className='w-full text-2xl font-bold text-purple'>
+                    <Link to="/">DOAKAN</Link>
+                </h1>
                 <ul className='hidden md:flex'>
                     <li className='p-5'>
                         <Link to="/">Home</Link>
@@ -32,9 +34,17 @@ export const NavigationBar = () => {
                         <Link to="/aboutus">About</Link>
                     </li>
                     <li className='p-5'>
-                        <Link to="/login">
-                            <FontAwesomeIcon icon={faArrowRightToBracket} className="text-2xl" />
-                        </Link>
+                        {
+                            localStorage.getItem('token') === null ? (
+                                <Link to="/login">
+                                    <FontAwesomeIcon icon={faArrowRightToBracket} className="text-2xl" />
+                                </Link>
+                            ):(
+                                <Link to="/profile">
+                                    <FontAwesomeIcon icon={faUser} />
+                                </Link>
+                            )
+                        }
                     </li>
                 </ul>
                 <div onClick={handleNav} className='block md:hidden'>

@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import React from "react";
 
 export default function Payment(props) {
@@ -30,7 +32,7 @@ export default function Payment(props) {
                   </button>
                 </div>
                 <div className="relative p-6 flex-auto">
-                    <h2 className="text-center font-semibold">Terimakasih Telah Memberikan Donasi Anda</h2>
+                  <h2 className="text-center font-semibold">Terimakasih Telah Memberikan Donasi Anda</h2>
                 </div>
                 <div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
                   <button
